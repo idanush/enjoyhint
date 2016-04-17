@@ -86,8 +86,13 @@ var EnjoyHint = function (_options) {
                     that.clear();
                 }, 250);
                 $(document.body).scrollTo(step_data.selector, step_data.scrollAnimationSpeed || 250, {offset: -100});
-                setTimeout(function () {
+                
+                function renderStep() {
                     var $element = $(step_data.selector);
+                    if (!$element || $element.length === 0) {
+                        setTimeout(renderStep, step_data.scrollAnimationSpeed + 20 || 270);
+                        return;
+                    }
                     var event = makeEventName(step_data.event);
 
                     $body.enjoyhint('show');
@@ -197,7 +202,9 @@ var EnjoyHint = function (_options) {
                         shape_data.height = h + shape_margin;
                     }
                     $body.enjoyhint('render_label_with_shape', shape_data);
-                }, step_data.scrollAnimationSpeed + 20 || 270);
+                }
+                
+                setTimeout(renderStep, step_data.scrollAnimationSpeed + 20 || 270);
             }, timeout);
         } else {
             $body.enjoyhint('hide');
