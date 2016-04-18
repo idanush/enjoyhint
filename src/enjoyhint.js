@@ -201,6 +201,10 @@ var EnjoyHint = function (_options) {
                         shape_data.width = w + shape_margin;
                         shape_data.height = h + shape_margin;
                     }
+                    
+                    if (step_data.event === 'next' && !step_data.renderShape){
+                        shape_data.noRenderShape = true;
+                    }
                     $body.enjoyhint('render_label_with_shape', shape_data);
                 }
                 

@@ -198,18 +198,35 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
                     var r = data.r || 0;
                     var x = data.x || 0;
                     var y = data.y || 0;
-
-                    var tween = new Kinetic.Tween({
-                        node: that.shape,
-                        duration: 0.2,
-                        center_x: x,
-                        center_y: y,
-                        width: r * 2,
-                        height: r * 2,
-                        radius: r
-                    });
+                    
+                    
+                    var tween;
+                    
+                    if (!data.noRenderShape) {
+                        tween = new Kinetic.Tween({
+                            node: that.shape,
+                            duration: 0.2,
+                            center_x: x,
+                            center_y: y,
+                            width: r * 2,
+                            height: r * 2,
+                            radius: r
+                        });
+                        
+                    } else {
+                        tween = new Kinetic.Tween({
+                            node: that.shape,
+                            duration: 0.1,
+                            center_x: x,
+                            center_y: y,
+                            width: 0,
+                            height: 0,
+                            radius: 0
+                        });
+                    }
+                    
                     tween.play();
-
+                    
                     var left = x - r;
                     var right = x + r;
                     var top = y - r;
@@ -252,16 +269,34 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
                     var w = data.w || 0;
                     var h = data.h || 0;
                     var margin = 20;
-                    var tween = new Kinetic.Tween({
-                        node: that.shape,
-                        duration: 0.2,
-                        center_x: x,
-                        center_y: y,
-                        width: w,
-                        height: h,
-                        radius: r
-                    });
+                    
+                    var tween;
+                    
+                    if (!data.noRenderShape) {
+                        tween = new Kinetic.Tween({
+                            node: that.shape,
+                            duration: 0.2,
+                            center_x: x,
+                            center_y: y,
+                            width: w,
+                            height: h,
+                            radius: r
+                        });
+                        
+                    } else {
+                        tween = new Kinetic.Tween({
+                            node: that.shape,
+                            duration: 0.1,
+                            center_x: x,
+                            center_y: y,
+                            width: 0,
+                            height: 0,
+                            radius: 0
+                        });
+                    }
+                    
                     tween.play();
+                    
                     var half_w = Math.round(w / 2);
                     var half_h = Math.round(h / 2);
                     var left = x - half_w;
@@ -455,13 +490,15 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
                             //new center_x and center_y
                             data.center_x = sides_pos.left + new_half_w;
                             data.center_y = sides_pos.top + new_half_h;
+                            
 
                             shape_data = that.renderCircle({
                                 x: data.center_x,
                                 y: data.center_y,
-                                r: data.radius
+                                r: data.radius,
+                                noRenderShape: data.noRenderShape
                             });
-
+                            
                             break;
                         case 'rect':
                             half_w = Math.round(data.width / 2);
@@ -481,13 +518,16 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
                             //new center_x and center_y
                             data.center_x = sides_pos.left + half_w;
                             data.center_y = sides_pos.top + half_h;
+
                             shape_data = that.renderRect({
                                 x: data.center_x,
                                 y: data.center_y,
                                 w: data.width,
                                 h: data.height,
                                 r: data.radius,
+                                noRenderShape: data.noRenderShape
                             });
+
                             break;
                     }
 
