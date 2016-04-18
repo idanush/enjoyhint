@@ -593,13 +593,21 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
                         top: 10
                     });
 
-
-                    that.disableEventsNearRect({
-                        top: shape_data.top,
-                        bottom: shape_data.bottom,
-                        left: shape_data.left,
-                        right: shape_data.right
-                    });
+                    if (data.noRenderShape) {
+                        that.disableEventsNearRect({
+                            top: shape_data.top,
+                            bottom: shape_data.top,
+                            left: shape_data.left,
+                            right: shape_data.left
+                        });
+                    } else {
+                        that.disableEventsNearRect({
+                            top: shape_data.top,
+                            bottom: shape_data.bottom,
+                            left: shape_data.left,
+                            right: shape_data.right
+                        });
+                    }
 
 
                     var x_to = 0;
